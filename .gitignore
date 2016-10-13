@@ -1,0 +1,11 @@
+.project
+.settings
+.vagrant
+.env
+.swp
+.ipynb*
+*.csv
+*.txt
+*.ipynb
+*.log
+*~
