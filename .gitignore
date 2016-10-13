@@ -5,6 +5,7 @@
 .swp
 .ipynb*
 *.csv
+*.xls
 *.txt
 *.ipynb
 *.log
