@@ -14,7 +14,7 @@ from collections import defaultdict
 import re
 import pprint
 
-OSMFILE = "example.osm"
+OSMFILE = "edinburgh_scotland.osm"
 street_type_re = re.compile(r'\b\S+\.?$', re.IGNORECASE)
 
 
@@ -48,13 +48,18 @@ def audit(osmfile):
             for tag in elem.iter("tag"):
                 if is_street_name(tag):
                     audit_street_type(street_types, tag.attrib['v'])
+        elem.clear()
+
     osm_file.close()
     return street_types
 
 
 def update_name(name, mapping):
 
-    # YOUR CODE HERE
+    for key in mapping:
+        pos = name.find(key)
+        if pos != -1:
+            name = name[:pos] + mapping[key]
 
     return name
 
@@ -67,7 +72,7 @@ def test():
     for st_type, ways in st_types.iteritems():
         for name in ways:
             better_name = update_name(name, mapping)
-            print name, "=>", better_name
+            print(name, "=>", better_name)
             if name == "West Lexington St.":
                 assert better_name == "West Lexington Street"
             if name == "Baldwin Rd.":
@@ -75,4 +80,6 @@ def test():
 
 
 if __name__ == '__main__':
-    test()
+    #test()
+    st_types = audit(OSMFILE)
+    pprint.pprint(dict(st_types))
